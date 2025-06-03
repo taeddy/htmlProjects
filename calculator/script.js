@@ -1,6 +1,7 @@
 let runningTotal = 0;
 let buffer = "0";
 let previousOperator;
+let calActive = false;
 
 const screen = document.querySelector(".screen");
 
@@ -24,6 +25,7 @@ function handleSymbol(symbol){
                 return
             }
             flushOperation(parseInt(buffer));
+            calActive = false
             previousOperator = null;
             buffer = runningTotal;
             runningTotal = 0;
@@ -71,8 +73,9 @@ function flushOperation(intBuffer){
 }
 
 function handleNumber(numberString){
-    if(buffer === '0'){
+    if(buffer === '0' || calActive === false){
         buffer = numberString;
+        calActive = true
     }else{
         buffer += numberString;
     }
